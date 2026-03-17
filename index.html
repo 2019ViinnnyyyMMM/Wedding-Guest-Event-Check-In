@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guest Check-in</title>
+
+<script src="https://unpkg.com/html5-qrcode"></script>
+
+<style>
+    body{
+        margin: 0;
+        height: 100vh;
+        background: url(check-in.png) no-repeat center;
+        background-size: cover;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .camera-box{
+        width: 90%;
+        max-width: 380px;
+        aspect-ratio: 3/4;
+        background: #eee;
+        border-radius: 20px;
+        margin-top:40px;
+        display: flex;
+        justify-content: center;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    #reader{
+        width:100%;
+        height: 100%;
+    }
+    #result{
+        margin-top:20px;
+        font-size:20px;
+        font-weight:bold;
+        color: white;
+    }
+</style>
+</head>
+<body>
+    <div class="camera-box">
+        <div id="reader"></div>
+    </div>
+
+    <div id="result">Ready to scan</div>
+</body>
+<script>
+const scriptURL = "https://script.google.com/macros/s/AKfycbyLpM3qSELDlc68jT0kXEUOVDnGP8FyUwWVucQOljcFAIp0vWPPHa3f_RvXivMIv7Dp/exec";
+function onScanSuccess(decodedText) {
+fetch(scriptURL + "?id=" + decodedText)
+.then(res => res.text())
+.then(data => {
+
+let result = document.getElementById("result");
+
+if(data.startsWith("SUCCESS")){
+    let name = data.split("|")[1];
+    result.innerHTML = "Welcome" + name;
+}
+
+else if(data.startsWith("ALREADY")){
+    let name = data.split("|")[1];
+    result.innerHTML = "Already Check-In" + name;
+}
+
+else{
+    result.innerHTML = "Guest Not Found";
+}
+});
+}
+
+let scanner = new Html5QrcodeScanner(
+"reader",
+{
+    fps: 20,
+    qrbox: {width: 220, height: 220}
+}
+);
+
+scanner.render(onScanSuccess);
+</script>
+</body>
+</html>
