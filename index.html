@@ -58,7 +58,7 @@
 <script>
 const scriptURL = "https://script.google.com/macros/s/AKfycbyLpM3qSELDlc68jT0kXEUOVDnGP8FyUwWVucQOljcFAIp0vWPPHa3f_RvXivMIv7Dp/exec";
 function onScanSuccess(decodedText) {
-fetch(scriptURL + "?id=" + decodedText)
+fetch(decodedText)
 .then(res => res.text())
 .then(data => {
 
