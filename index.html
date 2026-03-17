@@ -54,6 +54,7 @@
     </div>
 
     <div id="result">Ready to scan</div>
+    <div id="counter">0/0 Checked In</div>
     <audio id="beep" src="https://www.soundjay.com/buttons/sounds/beep-01a.mp3"></audio>
 </body>
 <script>
@@ -62,6 +63,7 @@ const scriptURL = "https://script.google.com/macros/s/AKfycbxdvpRpeLlFFi0Wpg0CKk
     
 const beep = document.getElementById("beep");
 function onScanSuccess(decodedText) {
+    
 fetch(decodedText)
 .then(res => res.text())
 .then(data => {
@@ -69,22 +71,26 @@ fetch(decodedText)
 beep.play();
 
 let result = document.getElementById("result");
+let counter = document.getElementById("counter");
 
-if(data.startsWith("SUCCESS")){
-    let name = data.split("|")[1];
-    result.innerHTML = "Welcome" + name;
+let parts = data.split("|");
+
+if(parts[0] === "SUCCESS")}
+
+    result.innerHTML = " Welcome " + parts[1];
+    counter.innerHTML = parts[2] + "/" + parts[3] + "Checked In";
+
 }
 
-else if(data.startsWith("ALREADY")){
-    let name = data.split("|")[1];
-    result.innerHTML = "Already Check-In" + name;
+else if(parts[0] === "ALREADY"){
+
+    result.innerHTML = "Already Checked In: " + parts[1];
+    counter.innerHTML = parts[2] + "/" + parts[3] + " Checked In";
+
 }
 
 else{
     result.innerHTML = "Guest Not Found";
-}
-});
-}
 
 let scanner = new Html5QrcodeScanner(
 "reader",
