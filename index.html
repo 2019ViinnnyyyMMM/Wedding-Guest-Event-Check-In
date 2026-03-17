@@ -54,13 +54,19 @@
     </div>
 
     <div id="result">Ready to scan</div>
+    <audio id="beep" src="https://www.soundjay.com/buttons/sounds/beep-01a.mp3"></audio>
 </body>
 <script>
+
 const scriptURL = "https://script.google.com/macros/s/AKfycbxdvpRpeLlFFi0Wpg0CKkurxaC5xFHHA_kBvhIpk6E_j97Cw52YDtUaoTvmnUf7r8bR/exec";
+    
+const beep = document.getElementById("beep");
 function onScanSuccess(decodedText) {
 fetch(decodedText)
 .then(res => res.text())
 .then(data => {
+
+beep.play();
 
 let result = document.getElementById("result");
 
