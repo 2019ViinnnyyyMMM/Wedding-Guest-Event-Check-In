@@ -55,6 +55,7 @@
 
     <div id="result">Ready to scan</div>
     <div id="counter">0/0 Checked In</div>
+    <div class="counter" id="total">0</div>
     <audio id="beep" src="https://www.soundjay.com/buttons/sounds/beep-01a.mp3"></audio>
 </body>
 <script>
@@ -63,7 +64,7 @@ const scriptURL = "https://script.google.com/macros/s/AKfycbxdvpRpeLlFFi0Wpg0CKk
     
 const beep = document.getElementById("beep");
 const totalGuests = data.length;
-const checkedIn = data.filter(row => row[1] === "Checked In".length;
+const checked = data.filter(row => row["Check-In] === "Checked In");
     
 function onScanSuccess(decodedText) {
     
@@ -75,6 +76,8 @@ beep.play();
 
 let result = document.getElementById("result");
 let counter = document.getElementById("counter");
+let total = document.getElementById("total").innerText = checked.length;
+
 
 let parts = data.split("|");
 
