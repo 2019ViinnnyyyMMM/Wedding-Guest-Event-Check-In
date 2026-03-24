@@ -65,22 +65,16 @@
 
 const scriptURL = "https://script.google.com/macros/s/AKfycbxdvpRpeLlFFi0Wpg0CKkurxaC5xFHHA_kBvhIpk6E_j97Cw52YDtUaoTvmnUf7r8bR/exec";
     
-const beep = document.getElementById("beep");
-const totalGuests = data.length;
-const checked = data.filter(row => row["Check-In] === "Checked In");
-    
 function onScanSuccess(decodedText) {
     
 fetch(decodedText)
 .then(res => res.text())
-.then(data => {
+.then(response => {
 
 beep.play();
 
 let result = document.getElementById("result");
 let counter = document.getElementById("counter");
-let total = document.getElementById("total").innerText = checked.length;
-
 
 let parts = data.split("|");
 
@@ -88,13 +82,14 @@ if(parts[0] === "SUCCESS") {
 
     result.innerHTML = " Welcome " + parts[1];
     counter.innerHTML = parts[2] + "/" + parts[3] + " Checked In";
+    document.getElementById("total").innerText = parts[2];
 
 }
-
 else if(parts[0] === "ALREADY") {
 
     result.innerHTML = "Already Checked In: " + parts[1];
     counter.innerHTML = parts[2] + "/" + parts[3] + " Checked In";
+    document.getElementById("total").innerText = parts[2];
 
 }
 else{
