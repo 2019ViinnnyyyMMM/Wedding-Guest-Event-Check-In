@@ -57,14 +57,13 @@
     <div class="counter" id="total">0</div>
     
     <div id="result">Ready to scan</div>
-    <div id="counter">0/0 Checked In</div>
     <div class="counter" id="total">0</div>
     <audio id="beep" src="https://www.soundjay.com/buttons/sounds/beep-01a.mp3"></audio>
 </body>
 <script>
 
 const scriptURL = "https://script.google.com/macros/s/AKfycbxdvpRpeLlFFi0Wpg0CKkurxaC5xFHHA_kBvhIpk6E_j97Cw52YDtUaoTvmnUf7r8bR/exec";
-    
+const beep = document.getElementById("beep");    
 function onScanSuccess(decodedText) {
     
 fetch(decodedText)
@@ -76,16 +75,16 @@ beep.play();
 let result = document.getElementById("result");
 let counter = document.getElementById("counter");
 
-let parts = data.split("|");
+let parts = response.split("|");
 
-if(parts[0] === "SUCCESS") {
+if(parts[0].includes("Welcome")) {
 
     result.innerHTML = " Welcome " + parts[1];
     counter.innerHTML = parts[2] + "/" + parts[3] + " Checked In";
     document.getElementById("total").innerText = parts[2];
 
 }
-else if(parts[0] === "ALREADY") {
+else if(parts[0].includes("already")) {
 
     result.innerHTML = "Already Checked In: " + parts[1];
     counter.innerHTML = parts[2] + "/" + parts[3] + " Checked In";
