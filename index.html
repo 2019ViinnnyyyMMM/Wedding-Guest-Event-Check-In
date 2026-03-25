@@ -114,9 +114,12 @@ scanner.render(onScanSuccess);
 function updateLiveCount() {
     fetch(scriptURL + "?action=count")
     .then(res => res.text())
-    .then(count => {
-        console.log("LIVE COUNT:", count);
-        document.getElementById("total").innerText = count;
+    .then(data => {
+        let parts = data.split("|");
+        let checked = parts[0];
+        let total = parts[1];
+        
+        document.getElementById("total").innerText = checked + "/" + total;
     })
     .catch(err => console.error("Count error:", err));
 }
