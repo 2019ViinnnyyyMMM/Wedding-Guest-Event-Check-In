@@ -75,7 +75,7 @@ let parts = response.split("|");
 if(parts[0] === "SUCCESS") {
 
     result.innerHTML = " Welcome " + parts[1];
-    document.getElementById("total").innerText = parts[2] + "/" + parts[3] + "Guests Checked In";
+    document.getElementById("total").innerText = parts[2] + "/" + parts[3] + " Guests Checked In";
 
 }
 else if(parts[0] === "ALREADY") {
@@ -89,8 +89,16 @@ else{
     
 }
 
-});
+setTimeout(() => {
+    result.innerHTML = "Ready to scan";
+    isScanning = true;
+}, 4000); // 
 
+});
+.catch(err => {
+    console.error(err);
+    isScanning = true;
+});
 }
     
 let scanner;
