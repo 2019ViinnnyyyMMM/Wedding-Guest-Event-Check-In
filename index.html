@@ -75,14 +75,13 @@ let parts = response.split("|");
 if(parts[0] === "SUCCESS") {
 
     result.innerHTML = " Welcome " + parts[1];
-    document.getElementById("total").innerText = parts[2] + "/" + parts[3];
+    document.getElementById("total").innerText = parts[2] + "/" + parts[3] + "Guests Checked In";
 
 }
 else if(parts[0] === "ALREADY") {
 
-    result.innerHTML = "Already Checked In: " + parts[1];
-    document.getElementById("total").innerText = parts[2] + "/" + parts[3];
-
+    result.innerHTML = "All Guests Already Checked In: " + parts[1];
+    
 }
 else{
     
