@@ -61,21 +61,27 @@
 <script>
 
 const scriptURL = "https://script.google.com/macros/s/AKfycbxdvpRpeLlFFi0Wpg0CKkurxaC5xFHHA_kBvhIpk6E_j97Cw52YDtUaoTvmnUf7r8bR/exec";
-const beep = document.getElementById("beep");    
+
+let isScanning = true;
+
 function onScanSuccess(decodedText) {
+
+    if (!isScanning) return;
+    isScanning = false;
     
-fetch(decodedText)
-.then(res => res.text())
-.then(response => {
+    fetch(decodedText)
+    .then(res => res.text())
+    .then(response => {
 
-let result = document.getElementById("result");
+        let result = document.getElementById("result");
+        let total = document.getElementById("total");
+        
+        let parts = response.split("|");
 
-let parts = response.split("|");
+        if(parts[0] === "SUCCESS") {
 
-if(parts[0] === "SUCCESS") {
-
-    result.innerHTML = " Welcome " + parts[1];
-    document.getElementById("total").innerText = parts[2] + "/" + parts[3] + " Guests Checked In";
+            result.innerHTML = " Welcome " + parts[1];
+            total.innerText = parts[2] + "/" + parts[3] + " Guests Checked In";
 
 }
 else if(parts[0] === "ALREADY") {
