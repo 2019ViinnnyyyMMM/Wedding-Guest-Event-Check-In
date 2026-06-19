@@ -93,15 +93,21 @@ else{
 
 }
     
-let scanner = new Html5QrcodeScanner(
-"reader",
-{
-    fps: 20,
-    qrbox: {width: 220, height: 220}
-}
-);
+let scanner;
 
-scanner.render(onScanSuccess);
+function startScanner() {
+    if (scanner) return; // prevent double start
+
+    scanner = new Html5QrcodeScanner(
+        "reader",
+        { fps: 20, qrbox: { width: 220, height: 220 } },
+        false
+    );
+
+    scanner.render(onScanSuccess);
+}
+
+startScanner();
 
 function updateLiveCount() {
     fetch(scriptURL + "?action=count")
